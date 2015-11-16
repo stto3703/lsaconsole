@@ -2,14 +2,21 @@
 
 .lsa-content {
   background-color: #EEEEEE;
-  color: #F5F5F5;
+  color: #212121;
 }
 
 md-toolbar.md-warn > md-tabs.md-default-theme, md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]) {
   color: #9E9E9E;
 }
 
-
+.json-box {
+    background: #8094A9;
+    color: white;
+    font-size: 0.75em;
+    line-height: 1.5em;
+    padding: 1em;
+    margin-bottom: 1em;
+}
 
 
 

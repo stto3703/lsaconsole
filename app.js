@@ -13,7 +13,7 @@ app.controller('AppController', function ($mdSidenav, $mdDialog, connectionManag
         .clickOutsideToClose(true)
         .title('This is an alert title')
         .content('You can specify some description text in here.')
-        .ariaLabel('Alert Dialog Demo') 
+        .ariaLabel('Alert Dialog Demo')
         .ok('Got it!')
       );
   };
@@ -41,39 +41,79 @@ app.controller('AppController', function ($mdSidenav, $mdDialog, connectionManag
 
 
 app.directive("lsaSubscriptions", function (connectionManager) {
-  
+
   return {
     restrict: "E",
     templateUrl: "templates/subscriptions.html",
     scope: {},
     controller: function () {
-      
+      var vm = this;
+      vm.subscribeEvent = function () {
+        connectionManager.subscribeEvent(vm.eventId).then(function () {
+          vm.eventId = null;
+        });
+      };
     },
     controllerAs: "vm"
   };
-  
+
+});
+
+app.directive("lsaMessages", function (connectionManager) {
+
+  return {
+    restrict: "E",
+    templateUrl: "templates/messages.html",
+    scope: {},
+    controller: function () {
+      var vm = this;
+      vm.messages = connectionManager.messages;
+    },
+    controllerAs: "vm"
+  };
+
 });
 
 
 
-app.service("connectionManager", function ($timeout, $mdToast) {
+app.service("connectionManager", function ($timeout, $q, $mdToast, $rootScope) {
 
   this.settings = null;
   this.isConnected = false;
+  this.connection = null;
+  this.messages = [];
 
   this.disconnect = function () {
     var self = this;
-    return $timeout(function () {
+    var deferred = $q.defer();
+    if (self.connection) {
+      self.connection.stop();
+      self.proxy = null;
+      self.connection = null;
       self.isConnected = false;
-    }, 2000);
+      deferred.resolve();
+    }
+    return deferred.promise;
   };
 
   this.connect = function (settings) {
     var self = this;
-    return $timeout(function () {
-      self.settings = settings;
+    this.connection = $.hubConnection(settings.host.url);
+    this.connection.qs = {
+      culture: settings.culture.name,
+      app: settings.app.id,
+      version: settings.version
+    };
+    this.proxy = this.connection.createHubProxy("bettingOfferHub");
+    this.proxy.on("ApplyUpdate", function (data) {
+      self.messages.unshift(data);
+      $rootScope.$apply();
+    });
+    self.settings = settings;
+    var deferred = $q.defer();
+    this.connection.start().then(function () {
       self.isConnected = true;
-
+      self.messages.length = 0;
       $mdToast.show(
         $mdToast.simple()
           .content('Connected!')
@@ -81,8 +121,20 @@ app.service("connectionManager", function ($timeout, $mdToast) {
           .capsule(true)
           .hideDelay(3000)
         );
+      deferred.resolve();
+    });
+    return deferred.promise;
+  };
 
-    }, 2000);
+  this.subscribeEvent = function (id) {
+    var self = this;
+    var deferred = $q.defer();
+    if (self.isConnected) {
+      self.proxy.invoke("subscribeEvent", id).then(function (d) {
+        deferred.resolve();
+      });
+    }
+    return deferred.promise;
   };
 
 });

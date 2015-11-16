@@ -1,15 +1,27 @@
 <div>
 
-		<div layout layout-sm="column">
-			<md-input-container>
-				<label>event id</label>
-				<input ng-model="user.company" />
+	<section class="no-print" layout-align="end center" layout-padding flex>
+		<div layout="row" layout-align="start center" flex>
+			<md-input-container flex>
+				<label>Event ID</label>
+				<input type="number" ng-model="vm.eventId">
 			</md-input-container>
+			<md-button class="md-raised md-primary" ng-click="vm.subscribeEvent()">Subscribe event</md-button>
 		</div>
-
-		<md-button class="md-raised md-primary md-mini">Subscribe</md-button>
-
-
-
+		<div layout="row" layout-align="start center" flex>
+			<md-input-container flex>
+				<label>Market ID</label>
+				<input ng-model="user.company">
+			</md-input-container>
+			<md-button class="md-raised md-primary">Subscribe market</md-button>
+		</div>
+		<div layout="row" layout-align="start center" flex>
+			<md-input-container flex>
+				<label>Bet Numbers</label>
+				<input ng-model="user.company">
+			</md-input-container>
+			<md-button class="md-raised md-primary">Subscribe bets</md-button>
+		</div>
+	</section>
 
 </div>

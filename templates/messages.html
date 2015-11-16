@@ -1,0 +1,16 @@
+<div>
+
+	<md-content layout="column">
+		
+		<div ng-repeat="message in vm.messages" class="json-box repeated-item" flex>
+			{{message | json}}
+		</div>
+		
+		<!--<md-virtual-repeat-container id="vertical-container">
+			<div md-virtual-repeat="item in vm.messages" class="repeated-item" flex>
+				{{item}}
+			</div>
+		</md-virtual-repeat-container>-->
+	</md-content>
+
+</div>
