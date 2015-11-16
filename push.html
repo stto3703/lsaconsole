@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head><title>
+	Raw Connection Tests
+</title>
+		<style>
+			body { font-family: Arial; }
+
+			p { margin: 0; }
+
+			.open { color: #08a41c; }
+
+			.err { color: #f00; }
+
+			.log-entry {
+				padding: 10px;
+				border-top: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+
+		<input type="text" placeholder="event id" id="targetUrl" value="http://dev.lsa.itsfogo.com/" />
+		<input type="text" placeholder="app id" id="appId" value="1" />
+		<input type="button" value="Connect" id="connect" />
+
+		<br/>
+		<br/>
+
+		<input type="text" placeholder="event id" id="eventid" />
+		<input type="button" value="Subscribe Event" id="subscribeEvent" />
+		<input type="button" value="Unsubscribe Event" id="unsubscribeEvent" />
+	
+		<br/>
+		<br/>
+	
+		<input type="text" placeholder="market id" id="marketid" />
+		<input type="button" value="Subscribe Market" id="subscribeMarket" />
+		<input type="button" value="Unsubscribe Market" id="unsubscribeMarket" />
+	
+		<hr/>
+
+		<div id="log"></div>
+
+		<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+		<script src="//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
+		<!--<script src="http://localhost:44673/signalr/hubs"></script>-->
+		<script>
+			$(function() {
+
+				$("#subscribeEvent").click(function() {
+					var eventId = parseInt($("#eventid").val());
+					proxy.invoke("subscribeEvent", eventId).then(function(d) {
+						log("subscribeEvent " + eventId);
+						$("#eventid").val(null);
+					});
+				});
+
+				$("#unsubscribeEvent").click(function() {
+					var eventId = parseInt($("#eventid").val());
+					proxy.invoke("unsubscribeEvent", eventId).then(function(d) {
+						log("unsubscribeEvent " + eventId);
+						$("#eventid").val(null);
+					});
+				});
+
+				$("#subscribeMarket").click(function() {
+					var marketid = parseInt($("#marketid").val());
+					proxy.invoke("subscribeMarket", marketid).then(function(d) {
+						log("subscribeMarket " + marketid);
+						$("#marketid").val(null);
+					});
+				});
+
+				$("#unsubscribeMarket").click(function() {
+					var marketid = parseInt($("#marketid").val());
+					proxy.invoke("unsubscribeMarket", marketid).then(function(d) {
+						log("unsubscribeMarket " + marketid);
+						$("#marketid").val(null);
+					});
+				});
+
+				$("#connect").click(function () {
+
+					var url = $("#targetUrl").val();
+
+					var connection = $.hubConnection(url);
+
+					connection.qs = {
+						culture: "en-US",
+						version: "v1.0",
+						app: $("#appId").val()
+					};
+
+					var proxy = connection.createHubProxy("bettingOfferHub");
+
+					proxy.on("applyPacket", function (data) {
+						log("applyPacket " + JSON.stringify(data));
+					});
+
+					proxy.on("ApplyUpdate", function (data) {
+						log("ApplyUpdate " + JSON.stringify(data));
+					});
+
+					window.proxy = proxy;
+
+					connection.start().then(function () {
+
+						$("#targetUrl").attr("disabled", "disabled");
+						$("#appId").attr("disabled", "disabled");
+
+					});
+
+					log("starting connection to " + url);
+
+					connection.stateChanged(function (status) {
+						switch (status.newState) {
+							case $.signalR.connectionState.connecting:
+								log("connecting");
+								break;
+							case $.signalR.connectionState.connected:
+								log("connected " + connection.id);
+								break;
+							case $.signalR.connectionState.reconnecting:
+								log("reconnecting");
+								break;
+							case $.signalR.connectionState.disconnected:
+								log("disconnected");
+								break;
+						}
+					});
+
+					connection.received(function (data) {
+						//console.debug("received", data);
+					});
+
+					$("#connect").attr("disabled", "disabled");
+
+				});
+
+
+				function log(text) {
+					if ($("#log").children().length > 10) {
+						$("#log div:last-child").remove();
+					}
+					var entry = $("<div>").addClass("log-entry").text((new Date().toISOString()) + " - " + text);
+					$("#log").prepend(entry);
+				}
+			});
+		</script>
+	</body>
+</html>

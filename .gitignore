@@ -1,0 +1,7 @@
+logs
+*.log
+bin
+obj
+*.suo
+node_modules
+bower_components

@@ -1,0 +1,73 @@
+<md-dialog aria-label="Connection setup" ng-cloak>
+  <form name="setupForm">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Connection Settings</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="dialog.hide()">
+          <md-icon md-svg-src="img/icons/ic_close_white_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content style="max-width:800px;max-height:810px; min-width: 400px">
+      <div class="md-dialog-content">
+        <form>
+
+          <md-input-container class="md-block">
+            <label>Environment</label>
+            <md-select name="selectedHost" ng-model="dialog.selectedHost" required ng-disabled="dialog.isConnected || dialog.loading">
+              <md-option ng-repeat="host in dialog.config.hosts track by host.env" ng-value="host">{{host.url}}</md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Culture</label>
+            <md-select name="selectedCulture" ng-model="dialog.selectedCulture" required ng-disabled="dialog.isConnected || dialog.loading">
+              <md-option ng-repeat="culture in dialog.config.cultures track by culture.value" ng-value="culture">{{culture.name}}</md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Application</label>
+            <md-select name="selectedApp" ng-model="dialog.selectedApp" required ng-disabled="dialog.isConnected || dialog.loading">
+              <md-option ng-repeat="app in dialog.config.applications track by app.id" ng-value="app">{{app.name}}</md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Version</label>
+            <input ng-model="dialog.config.version" readonly="readonly">
+          </md-input-container>
+
+        </form>
+
+        <div layout="row" layout-align="center center">
+          <md-progress-circular md-mode="{{dialog.loading}}"></md-progress-circular>
+        </div>
+
+
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" ng-if="!dialog.isConnected">
+      <span flex></span>
+      <md-button ng-click="dialog.clear()" ng-disabled="dialog.loading">
+        Clear
+      </md-button>
+      <md-button ng-click="dialog.connect()" ng-disabled="setupForm.$invalid || dialog.loading" class="md-primary" layout layout-align="center end">
+        Connect
+      </md-button>
+    </md-dialog-actions>
+
+    <md-dialog-actions layout="row" ng-if="dialog.isConnected">
+      <span flex></span>
+      <md-button ng-click="dialog.disconnect()" ng-disabled="setupForm.$invalid || dialog.loading" class="md-primary" layout layout-align="center end">
+        Disconnect
+      </md-button>
+    </md-dialog-actions>
+
+  </form>
+</md-dialog>
