@@ -13,7 +13,7 @@ app.controller('AppController', function ($mdSidenav, $mdDialog, connectionManag
         .clickOutsideToClose(true)
         .title('This is an alert title')
         .content('You can specify some description text in here.')
-        .ariaLabel('Alert Dialog Demo')
+        .ariaLabel('Alert Dialog Demo') 
         .ok('Got it!')
       );
   };
