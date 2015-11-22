@@ -1,0 +1,16 @@
+<div layout="row" flex>
+	<form name="projectForm" ng-submit="vm.invoke()" layout="row" flex>
+		
+		<md-select name="selectedAction" ng-model="vm.selectedAction" placeholder="action">
+			<md-option ng-repeat="action in vm.hubMethods track by $index" ng-value="action">{{::action}}</md-option>
+		</md-select>
+
+		<md-input-container flex>
+			<label>args</label>
+			<input ng-model="vm.args">
+		</md-input-container>
+
+		<md-button type="submit" class="md-raised">Send</md-button>
+		
+	</form>
+</div>

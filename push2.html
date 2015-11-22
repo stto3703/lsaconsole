@@ -7,58 +7,32 @@
 	</title>
 	<meta name="viewport" content="initial-scale=1" />
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.css">
+	<link rel="stylesheet" href="css/angular-json-explorer.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body layout="column" ng-controller="AppController as vm">
-
 	<md-toolbar layout="row">
 		<div class="md-toolbar-tools">
-			<md-button ng-click="vm.toggleSidenav('left')" hide-gt-sm class="md-icon-button">
-				<md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg">
-				</md-icon>
-			</md-button>
-
 			<h2><span>lsa console</span></h2>
 			<span flex></span>
-
 			<md-button class="md-icon-button md-primary" aria-label="Settings" ng-click="vm.showDialog()">
 				<md-icon md-svg-src="img/icons/ic_exit_to_app_white_24px.svg" style="width: 24px; height: 24px;"></md-icon>
 			</md-button>
+			<connection-indicator></connection-indicator>
 		</div>
 	</md-toolbar>
 
+	<div layout="row" class="md-padding">
+		<lsa-invoker></lsa-invoker>
+	</div>
+
 	<div layout="row" flex>
-		<div layout="column" flex id="content">
-			<md-content layout="column" flex class="md-padding lsa-content">
-
-
-				<md-tabs md-dynamic-height md-border-bottom>
-					<md-tab label="Subscriptions">
-						<md-content class="md-padding lsa-content">
-							<lsa-subscriptions></lsa-subscriptions>
-						</md-content>
-					</md-tab>
-					<md-tab label="Messages">
-						<md-content class="md-padding lsa-content">
-							<lsa-messages></lsa-messages>
-						</md-content>
-					</md-tab>
-				</md-tabs>
-
-			</md-content>
-		</div>
+		<lsa-messages></lsa-messages>
 	</div>
 
 	<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
 	<script src="//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
-	<script src="bower_components/angular/angular.js"></script>
-	<script src="bower_components/angular-animate/angular-animate.js"></script>
-	<script src="bower_components/angular-aria/angular-aria.js"></script>
-	<script src="bower_components/angular-material/angular-material.js"></script>
-	<script src="app.js"></script>
-
-
+	<script src="build.js"></script>
 </body>
-
 </html>

@@ -1,16 +1,15 @@
-<div>
-
-	<md-content layout="column">
-		
-		<div ng-repeat="message in vm.messages" class="json-box repeated-item" flex>
-			{{message | json}}
-		</div>
-		
-		<!--<md-virtual-repeat-container id="vertical-container">
-			<div md-virtual-repeat="item in vm.messages" class="repeated-item" flex>
-				{{item}}
+<div layout="row" flex>
+	<div layout="row" flex="35" class="message-list">
+		<md-virtual-repeat-container layout="row" flex id="vertical-container">
+			<div md-virtual-repeat="message in vm.messages" class="message-item" flex ng-click="vm.selectMessage(message)" ng-class="{ selected: vm.isSelected(message) }">
+				<span class="message-index">{{message.index}}</span>
+				<span class="message-preview">{{message.data}}</span>
 			</div>
-		</md-virtual-repeat-container>-->
-	</md-content>
-
+		</md-virtual-repeat-container>
+	</div>
+	<div layout="row" flex>
+		<div class="json-view-container" flex>
+			<json-explorer payload="vm.selectedMessage.data" collapsed="vm.collapsed"></json-explorer>
+		</div>
+	</div>
 </div>

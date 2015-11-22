@@ -1,12 +1,10 @@
-
+body { 
+  overflow: hidden;
+}
 
 .lsa-content {
   background-color: #EEEEEE;
   color: #212121;
-}
-
-md-toolbar.md-warn > md-tabs.md-default-theme, md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]) {
-  color: #9E9E9E;
 }
 
 .json-box {
@@ -17,27 +15,67 @@ md-toolbar.md-warn > md-tabs.md-default-theme, md-tabs > md-tabs-wrapper > md-ta
     padding: 1em;
     margin-bottom: 1em;
 }
+    
+
+.message-list .message-item {
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 40px;
+    padding-top: 10px;
+    cursor: pointer;
+}
+.message-list .message-item:hover {
+  background-color: #F5F5F5;
+}
+
+.message-list .message-item:focus {
+  outline: none;
+  background-color: #F5F5F5;
+}
+
+.message-list .message-item.selected {
+  background-color: #616161;
+  color: white;
+}
+
+.message-list .message-item .message-index {
+  color: #616161;
+  padding: 0 10px;
+  font-size: 10px;
+}
+
+.message-list .message-item.selected .message-index {
+  color: #D8D8D8;
+}
+
+.message-list .message-item .message-preview {
+  font-family: monospace;
+  font-size: 1.1em;
+}
 
 
-
-
-.dialogdemoBasicUsage #popupContainer {
-  position: relative; }
-.dialogdemoBasicUsage .footer {
-  width: 100%;
-  text-align: center;
-  margin-left: 20px; }
-.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
-  font-size: 0.8em;
-  margin-top: 50px; }
   
   
-  .tabsdemoDynamicHeight md-content {
-  background-color: transparent !important; }
-  .tabsdemoDynamicHeight md-content md-tabs {
-    background: #f6f6f6;
-    border: 1px solid #e1e1e1; }
-    .tabsdemoDynamicHeight md-content md-tabs md-tabs-wrapper {
-      background: white; }
-  .tabsdemoDynamicHeight md-content h1:first-child {
-    margin-top: 0; }
+  
+ .json-view-container {
+   padding: 10px;
+   overflow: auto;
+   word-wrap: break-word;
+ }
+ 
+
+.connection-indicator {
+  background-color: #F44336;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  right: 0;
+}
+
+.connection-indicator.connected {
+  background-color: #8BC34A;
+}

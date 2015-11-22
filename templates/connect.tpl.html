@@ -47,7 +47,9 @@
           <md-progress-circular md-mode="{{dialog.loading}}"></md-progress-circular>
         </div>
 
-
+        <div ng-if="dialog.lastError">
+          <span ng-bind="dialog.lastError"></span>
+        </div>
 
       </div>
     </md-dialog-content>
