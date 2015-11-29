@@ -8,6 +8,8 @@ app.config(function ($sceProvider) {
 app.controller('AppController', function ($mdSidenav, $mdDialog, connectionManager) {
   var vm = this;
 
+  vm.connectionManager = connectionManager;
+
   vm.showDialog = function (ev) {
     $mdDialog.show({
       controller: "DialogController as dialog",

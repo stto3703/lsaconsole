@@ -7,9 +7,14 @@
 			</div>
 		</md-virtual-repeat-container>
 	</div>
-	<div layout="row" flex>
-		<div class="json-view-container" flex>
+	<div layout="column" flex>
+		<div class="json-view-container" flex="90">
 			<json-explorer payload="vm.selectedMessage.data" collapsed="vm.collapsed"></json-explorer>
+		</div>
+		<div class="message-details" flex="10" layout="row">
+			<div flex>
+				<span class="timestamp" ng-bind="vm.selectedMessage.timestamp | date:'yyyy-MM-dd HH:mm:ssZ'"></span>
+			</div>
 		</div>
 	</div>
 </div>

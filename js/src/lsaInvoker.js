@@ -12,8 +12,8 @@ app.directive("lsaInvoker", function (connectionManager) {
         "unsubscribeEvent",
         "subscribeMarket",
         "unsubscribeMarket",
-        "subscribeBet(s)",
-        "unsubscribeBet(s)"
+        "subscribeBetNumbers",
+        "unsubscribeBetNumbers"
       ];
       vm.selectedAction = this.hubMethods[0];
       vm.args = null;

@@ -1,3 +1,5 @@
-<div class="connection-indicator" ng-class="{ connected: vm.connectionManager.isConnected }">
+<div class="connection-indicator" 
+	ng-class="vm.connectionManager.connectionState"
+	ng-attr-title="{{vm.connectionManager.connectionState}}">
 	
 <div>

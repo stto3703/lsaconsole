@@ -76,6 +76,31 @@ body {
   right: 0;
 }
 
+.connection-indicator.connecting {
+  background-color: #FFB74D;
+}
+
 .connection-indicator.connected {
   background-color: #8BC34A;
+}
+
+.connection-indicator.reconnecting {
+  background-color: #EF6C00;
+}
+
+.connection-indicator.disconnected {
+  background-color: #F44336;
+}
+
+.connection-id {
+  font-size: small;
+  color: #D8D8D8;
+}
+
+.layout-column > .message-details {
+  padding: 0 10px;
+  height: 40px;
+  max-height: 40px;
+  line-height: 40px;
+  background-color: #EEEEEE;
 }

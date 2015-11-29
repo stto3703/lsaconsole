@@ -16,6 +16,9 @@
 		<div class="md-toolbar-tools">
 			<h2><span>lsa console</span></h2>
 			<span flex></span>
+			<span class="connection-id" ng-if="vm.connectionManager.connection">
+				connection id: <span ng-bind="vm.connectionManager.connection.id"></span>
+			</span>
 			<md-button class="md-icon-button md-primary" aria-label="Settings" ng-click="vm.showDialog()">
 				<md-icon md-svg-src="img/icons/ic_exit_to_app_white_24px.svg" style="width: 24px; height: 24px;"></md-icon>
 			</md-button>

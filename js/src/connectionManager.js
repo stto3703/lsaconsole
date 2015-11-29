@@ -1,7 +1,15 @@
 app.service("connectionManager", function ($timeout, $q, $mdToast, $rootScope, localStorageService) {
 
+  var connectionState = {
+    0: 'connecting',
+    1: 'connected',
+    2: 'reconnecting',
+    4: 'disconnected'
+  };
+  
   this.settings = null;
   this.isConnected = false;
+  this.connectionState = connectionState[4];
   this.connection = null;
   this.messages = [];
 
@@ -22,8 +30,13 @@ app.service("connectionManager", function ($timeout, $q, $mdToast, $rootScope, l
     this.connection.received(function (data) {
       self.messages.unshift({
         index: self.messages.length,
+        timestamp: new Date(),
         data: data
       });
+      $rootScope.$applyAsync();
+    });
+    this.connection.stateChanged(function (status) {
+      self.connectionState = connectionState[status.newState];
       $rootScope.$applyAsync();
     });
     this.proxy = this.connection.createHubProxy("bettingOfferHub");
@@ -75,24 +88,3 @@ app.service("connectionManager", function ($timeout, $q, $mdToast, $rootScope, l
   }
 
 });
-
-
-
-
-
-// connection.stateChanged(function (status) {
-// 						switch (status.newState) {
-// 							case $.signalR.connectionState.connecting:
-// 								log("connecting");
-// 								break;
-// 							case $.signalR.connectionState.connected:
-// 								log("connected " + connection.id);
-// 								break;
-// 							case $.signalR.connectionState.reconnecting:
-// 								log("reconnecting");
-// 								break;
-// 							case $.signalR.connectionState.disconnected:
-// 								log("disconnected");
-// 								break;
-// 						}
-// 					});
