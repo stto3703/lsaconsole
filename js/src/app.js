@@ -1,8 +1,14 @@
 /* global angular */
-var app = angular.module('LSAConsole', ['ngMaterial', 'ngJsonExplorer', 'LocalStorageModule']);
+var app = angular.module('LSAConsole', ['ngMaterial', 'ngJsonExplorer', 'LocalStorageModule', 'lsa']);
 
 app.config(function ($sceProvider) {
   $sceProvider.enabled(false);
+});
+
+app.config(function (livebookStreamApiProvider) {
+  livebookStreamApiProvider.configure({
+    triggerRootDigest: true
+  });
 });
 
 app.controller('AppController', function ($mdSidenav, $mdDialog, connectionManager) {

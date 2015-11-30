@@ -40,7 +40,7 @@ app.controller("DialogController", function DialogController($scope, $mdDialog, 
 
   dialog.disconnect = function () {
     dialog.loading = "indeterminate";
-    connectionManager.disconnect().then(function () {
+    connectionManager.disconnect().finally(function () {
       dialog.loading = false;
       dialog.isConnected = connectionManager.isConnected;
     });
